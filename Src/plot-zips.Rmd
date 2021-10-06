@@ -1,6 +1,6 @@
 ---
 title: "Mapping zipcodes"
-author: "Steve Simon"
+author: "Steve Simon and Satya Golla"
 date: "July 16, 2018"
 output: html_document
 ---
