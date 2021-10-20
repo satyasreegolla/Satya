@@ -1,0 +1,60 @@
+---
+title: "Neighborhood plots"
+author: "Satya Golla"
+date: "10/20/2021"
+output: html_document
+---
+
+```{r setup}
+library(sf)
+library(tidyverse)
+```
+
+```{r read}
+path_name <- "../data"
+list.files(path_name)
+file_name <- "Neighborhoods.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> all_neighborhoods
+head(all_neighborhoods)
+```
+
+
+```{r built-in-tools}
+all_neighborhoods                           %>%
+  ggplot()                              +
+  geom_sf(aes())                 +
+  ggtitle("plot of all neighborhoods")
+```
+
+
+```{r union}
+union_neighborhoods <- st_union(all_neighborhoods)
+
+union_neighborhoods %>%
+  ggplot() +
+  geom_sf(aes()) +
+  ggtitle("Union of all neighborhoods")
+```
+
+
+```{r read-jackson-county}
+file_name <- "tl_2020_29095_tabblock10.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> jackson_county_blocks
+head(jackson_county_blocks)
+```
+
+```{r map-jackson-county-blocks}
+jackson_county_blocks                           %>%
+  ggplot()                              +
+  geom_sf(aes())                 +
+  ggtitle("jackson_county_blocks")
+```
+
+
+```{r intersect}
+st_intersects(jackson_county_blocks, union_neighborhoods)
+```
