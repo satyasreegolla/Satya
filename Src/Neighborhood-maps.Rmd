@@ -55,6 +55,11 @@ jackson_county_blocks                           %>%
 ```
 
 
-```{r intersect}
+```{r crs}
+crs_j<-st_crs(jackson_county_blocks)
+st_crs(union_neighborhoods)<-crs_j
+```
+
+```{r intersect, message=TRUE}
 st_intersects(jackson_county_blocks, union_neighborhoods)
 ```
