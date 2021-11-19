@@ -27,7 +27,7 @@ all_neighborhoods                           %>%
   ggtitle("plot of all neighborhoods")
 
 
-``````{r union}
+```{r union}
 union_neighborhoods <- st_union(all_neighborhoods)
 
 union_neighborhoods %>%
@@ -36,7 +36,7 @@ union_neighborhoods %>%
   ggtitle("Union of all neighborhoods")
 
 
-``````{r read-leavenworth-county}
+```{r read-leavenworth-county}
 file_name <- "tl_2020_20103_tabblock10.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
