@@ -204,6 +204,36 @@ variable in the file
 
 A census block group is a statistical division of census tracts, and generally defined to contain between 600 and 3000 people. There are files for census block groups for [Kansas][c_bg_ks] and [Missouri][c_bg_mo]. 
 
+
+```{r read-bg-ks}
+path_name <- "../Data"
+file_name <- "tl_2021_20_bg.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> all_bg_ks
+head(all_bg_ks)
+all_bg_ks                              %>%
+     ggplot()                           +
+      geom_sf(aes())                    +
+      ggtitle("ks-bg")
+```
+
+
+```{r read-bg-mo}
+path_name <- "../Data"
+file_name <- "tl_2021_29_bg.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> all_bg_mo
+head(all_bg_mo)
+all_bg_mo                              %>%
+     ggplot()                           +
+      geom_sf(aes())                    +
+      ggtitle("mo-bg")
+```
+
+
+
 ### census blocks
 
 A census block is the smallest geographical unit used by the United States Census Bureau for tabulation of 100-percent data. There are files for census blocks for [Kansas][c]
@@ -214,8 +244,8 @@ path_name                              %>%
   paste(file_name, sep="/")            %>%
   st_read(stringsAsFactors=FALSE)      -> johnson_county_blocks
 head(johnson_county_blocks)
-johnson_county_blocks                         %>%
-     ggplot()                              +
+johnson_county_blocks                  %>%
+     ggplot()                           +
       geom_sf(aes())                    +
       ggtitle("johnson_county_blocks")
 ```
