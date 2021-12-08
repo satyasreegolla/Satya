@@ -347,9 +347,39 @@ johnson_county_blocks                   %>%
 
 This shapefile, Community_District, was provided by Neal Wilson. The various functions described in the US counties shapefiles section will be used here.
 
+```{r read-Community-Districts}
+file_name <- "Community_District.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> Community_Districts
+head(Community_Districts)
+Community_Districts                  %>%
+  ggplot()                              +
+      geom_sf(aes())                    +
+      ggtitle("Community_Districts")
+Community_Districts %>%
+  st_transform(crs=st_crs(all_counties)) -> cd
+```
+
 ### Neighborhoods
 
 This shapefile, Neighborhoods, was provided by Neal Wilson. The various functions described in the US counties shapefiles section will be used here.
+
+
+```{r read-Neighborhoods}
+file_name <- "Neighborhoods.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> Neighborhoods
+head(Neighborhoods)
+Neighborhoods                          %>%
+  ggplot()                              +
+      geom_sf(aes())                    +
+      ggtitle("Neighborhoods")
+Neighborhoods                          %>%
+  st_transform(crs=st_crs(all_counties)) -> nbd
+```
+
 
 ### Calculate intersections
 
@@ -360,6 +390,18 @@ Each community district will reside entirely inside a single county, and it is o
 It is important that both the counties and the community districts use a common coordinate reference system. It is uncelar WHICH coordinate reference system is best, but this is controlled by the st_crs function of the sf package.
 
 The st_intersects function will evaluate to TRUE if two shapefiles intersect. The st_area function will give the area of a shapefile and the st_intersection function will produce a new shapefile from the intersection of two shapefiles.
+
+```{r intersect-counties-Community-Districts}
+all_counties                         %>%
+  filter(STATEFP==20 | STATEFP==29)  ->       ks_mo_counties
+ks_mo_counties                       %>%
+  filter(COUNTYFP==29095)            %>%
+  st_intersects( cd, sparse=FALSE) -> intersect_matrix
+ print(intersect_matrix)
+ ggplot(data=cd, aes()) +
+        geom_sf(fill="lightgreen", col="darkgreen") +
+        geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") 
+```
 
 #### Intersection of counties with neighborhoods
 
