@@ -395,7 +395,7 @@ The st_intersects function will evaluate to TRUE if two shapefiles intersect. Th
 all_counties                         %>%
   filter(STATEFP==20 | STATEFP==29)  ->       ks_mo_counties
 ks_mo_counties                       %>%
-  filter(COUNTYFP=="095")               %>%
+  filter(STATEFP==29 & COUNTYFP=="095")               %>%
   st_intersects( cd, sparse=FALSE) -> intersect_matrix
  print(intersect_matrix)
  ggplot(data=cd, aes()) +
@@ -408,12 +408,12 @@ ks_mo_counties                       %>%
 all_counties                         %>%
   filter(STATEFP==20 | STATEFP==29)  ->       ks_mo_counties
 ks_mo_counties                       %>%
-  filter(COUNTYFP=="095")               %>%
+  filter(STATEFP==29 & COUNTYFP=="095")               %>%
   st_intersects( nbd, sparse=FALSE) -> intersect_matrix
  print(intersect_matrix)
- ggplot(data=cd, aes()) +
+ ggplot(data=nbd, aes()) +
         geom_sf(fill="lightgreen", col="darkgreen") +
-        geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") 
+        geom_sf(data=nbd[intersect_matrix, ], fill="pink", col="darkred") 
 ```
 
 #### Intersection of counties with neighborhoods
