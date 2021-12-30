@@ -404,6 +404,12 @@ ks_mo_counties                       %>%
 ```
 
 
+
+#### Intersection of counties with neighborhoods
+
+Again, each neighborhood will reside in a single county. The various functions described in the intersection of counties with community districts section will be used here. 
+
+
 ```{r intersect-counties-Neighborhoods}
 all_counties                         %>%
   filter(STATEFP==20 | STATEFP==29)  ->       ks_mo_counties
@@ -415,10 +421,6 @@ ks_mo_counties                       %>%
         geom_sf(fill="lightgreen", col="darkgreen") +
         geom_sf(data=nbd[intersect_matrix, ], fill="pink", col="darkred") 
 ```
-
-#### Intersection of counties with neighborhoods
-
-Again, each neighborhood will reside in a single county. The various functions described in the intersection of counties with community districts section will be used here. 
 
 #### Intersection of PUMAs with community districts
 
