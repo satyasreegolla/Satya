@@ -79,28 +79,11 @@ all_puma_ks                %>%
   
 ```
 
-
-
-```{r read-Community-Districts}
-file_name <- "Community_District.shp"
-path_name                              %>%
-  paste(file_name, sep="/")            %>%
-  st_read(stringsAsFactors=FALSE)      -> Community_Districts
-head(Community_Districts)
-Community_Districts                  %>%
-  ggplot()                              +
-      geom_sf(aes())                    +
-      ggtitle("Community_Districts")
-Community_Districts %>%
-  st_transform(crs=st_crs(all_counties)) -> cd
-```
-
 ```{r intersect-puma-Community-Districts}
-all_puma_ks                             %>%
-   bind_rows(all_puma_mo)               %>%   
-st_intersects( cd, sparse=FALSE) -> intersect_matrix
+mo_ks_puma                             %>%
+st_intersects( cd[1,], sparse=FALSE) -> intersect_matrix
  print(intersect_matrix)
- ggplot(data=cd, aes()) +
+ ggplot(data=cd[1,], aes()) +
         geom_sf(fill="lightgreen", col="darkgreen") +
         geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") 
 ```
