@@ -55,7 +55,7 @@ file_name <- "Community_District.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
   st_read(stringsAsFactors=FALSE)      -> Community_Districts
-head(Community_Districts)
+head(Community_Districts) 
 Community_Districts                  %>%
   ggplot()                              +
       geom_sf(aes())                    +
@@ -66,27 +66,17 @@ Community_Districts %>%
 
 
 ```{r intersect-mo-ks-tracts-Community-Districts}
-mo_ks_tracts                      %>%
-  st_intersects( cd, sparse=FALSE) -> intersect_matrix
- print(intersect_matrix)
- ggplot(data=cd, aes()) +
-        geom_sf(fill="lightgreen", col="darkgreen") +
-        geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") +
-        ggtitle("mo-ks-tracts-Community-Districts")
+for (i in 1:2) {
+  st_intersects( cd[i,], sparse=FALSE) -> intersect_matrix
+  total_area  <- st_area(mo_ks_tracts[intersect_matrix,]) / 1000000
+  intersect_area <- st_area(st_intersection(mo_ks_tracts[intersect_matrix,],cd[i,])) / 1000000 
+  print(intersect_area)
+  mo_ks_tracts[intersect_matrix,]           %>%
+    ggplot(aes())                            +
+      geom_sf(fill=NA, col="darkgreen")      +
+      geom_sf(data = cd[i,], fill=NA, col="darkred")  -> map
+  print(map)}
 ```
 
-variable in the file 
 
-+ Variables:
-  +   "STATEFP10"
-  +   "PUMACE10"
-  +   "GEOID10"
-  +   "NAMELSAD10"
-  +   "MTFCC10" 
-  +   "FUNCSTAT10" 
-  +   "ALAND10"
-  +   "AWATER10"
-  +   "INTPTLAT10"
-  +   "INTPTLON10"
-  +   "geometry"
-  
+
