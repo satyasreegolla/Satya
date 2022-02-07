@@ -1,53 +1,54 @@
 ---
-title: "Tracts"
+title: "Block groups"
 author: "Satya Golla"
-date: "12/30/2021"
+date: "2/7/2022"
 output: html_document
 ---
+
+
 
 ```{r setup}
 library(sf)
 library(tidyverse)
 ```
 
-
-```{r read-tract-ks}
-path_name <- "./data"
-file_name <- "tl_2021_20_tract.shp"
+```{r read-bg-ks}
+path_name <- "./Data"
+file_name <- "tl_2021_20_bg.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
-  st_read(stringsAsFactors=FALSE)      -> all_tract_ks
-head(all_tract_ks)
-all_tract_ks                           %>%
-     ggplot()                              +
+  st_read(stringsAsFactors=FALSE)      -> all_bg_ks
+head(all_bg_ks)
+all_bg_ks                              %>%
+     ggplot()                           +
       geom_sf(aes())                    +
-      ggtitle("ks-tract")
+      ggtitle("ks-bg")
 ```
 
 
-```{r read-tract-mo}
-path_name <- "./data"
-file_name <- "tl_2021_29_tract.shp"
+```{r read-bg-mo}
+path_name <- "./Data"
+file_name <- "tl_2021_29_bg.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
-  st_read(stringsAsFactors=FALSE)      -> all_tract_mo
-head(all_tract_mo)
-all_tract_mo                           %>%
-     ggplot()                              +
+  st_read(stringsAsFactors=FALSE)      -> all_bg_mo
+head(all_bg_mo)
+all_bg_mo                              %>%
+     ggplot()                           +
       geom_sf(aes())                    +
-      ggtitle("mo-tract")
+      ggtitle("mo-bg")
 ```
 
 
-```{r combine-tracts} 
-all_tract_ks                           %>%
-  bind_rows(all_tract_mo)  -> mo_ks_tracts 
-mo_ks_tracts                           %>%
+
+```{r combine-bg} 
+all_bg_ks                           %>%
+  bind_rows(all_bg_mo)  -> mo_ks_bg 
+mo_ks_bg                           %>%
  ggplot()                               +
       geom_sf(aes())                    +
-      ggtitle("mo-ks-tracts")  
+      ggtitle("mo-ks-bg")  
 ```
-
 
 
 ```{r read-Community-Districts}
@@ -61,12 +62,12 @@ Community_Districts                  %>%
       geom_sf(aes())                    +
       ggtitle("Community_Districts")
 Community_Districts %>%
-  st_transform(crs=st_crs(mo_ks_tracts)) -> cd
+  st_transform(crs=st_crs(mo_ks_bg)) -> cd
 ```
 
 
-```{r intersect-mo-ks-tracts-Community-Districts}
-mo_ks_tracts                      %>%
+```{r intersect-mo-ks-bg-Community-Districts}
+mo_ks_bg                      %>%
   st_intersects( cd, sparse=FALSE) -> intersect_matrix
  print(intersect_matrix)
  ggplot(data=cd, aes()) +
@@ -74,19 +75,3 @@ mo_ks_tracts                      %>%
         geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") +
         ggtitle("mo-ks-tracts-Community-Districts")
 ```
-
-variable in the file 
-
-+ Variables:
-  +   "STATEFP10"
-  +   "PUMACE10"
-  +   "GEOID10"
-  +   "NAMELSAD10"
-  +   "MTFCC10" 
-  +   "FUNCSTAT10" 
-  +   "ALAND10"
-  +   "AWATER10"
-  +   "INTPTLAT10"
-  +   "INTPTLON10"
-  +   "geometry"
-  

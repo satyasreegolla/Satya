@@ -77,7 +77,6 @@ mo_ks_puma %>%
  ggplot()                               +
       geom_sf(aes())                    +
       ggtitle("mo-ks-puma")  
-  
 ```
 
 
