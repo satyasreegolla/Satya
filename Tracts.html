@@ -326,8 +326,8 @@ path_name                              %&gt;%
   total_area  &lt;- st_area(mo_ks_tracts[intersect_matrix,]) / 1000000
   intersect_area &lt;- st_area(st_intersection(mo_ks_tracts[intersect_matrix,],cd[i,])) / 1000000 
   print(intersect_area)
-  mo_ks_tracts[intersect_matrix,]           %&gt;%
-    ggplot(aes())                            +
+  mo_ks_tracts[intersect_matrix,]               %&gt;%
+    ggplot(aes())  +
       geom_sf(fill=NA, col=&quot;darkgreen&quot;)      +
       geom_sf(data = cd[i,], fill=NA, col=&quot;darkred&quot;)  -&gt; map
   print(map)}</code></pre>

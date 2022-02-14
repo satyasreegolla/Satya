@@ -71,12 +71,14 @@ for (i in 1:2) {
   total_area  <- st_area(mo_ks_tracts[intersect_matrix,]) / 1000000
   intersect_area <- st_area(st_intersection(mo_ks_tracts[intersect_matrix,],cd[i,])) / 1000000 
   print(intersect_area)
-  mo_ks_tracts[intersect_matrix,]           %>%
-    ggplot(aes())                            +
+  mo_ks_tracts[intersect_matrix,]               %>%
+    ggplot(aes())  +
       geom_sf(fill=NA, col="darkgreen")      +
       geom_sf(data = cd[i,], fill=NA, col="darkred")  -> map
   print(map)}
 ```
+
+
 
 
 

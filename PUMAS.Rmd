@@ -111,3 +111,18 @@ st_intersects( cd[i,], sparse=FALSE) -> intersect_matrix
 }
 ```
 
+
+```{r read-Neighborhoods}
+file_name <- "Neighborhoods.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> Neighborhoods
+head(Neighborhoods)
+Neighborhoods                          %>%
+  ggplot()                              +
+      geom_sf(aes())                    +
+      ggtitle("Neighborhoods")
+Neighborhoods                          %>%
+  st_transform(crs=st_crs(mo_ks_puma)) -> nbd
+```
+
