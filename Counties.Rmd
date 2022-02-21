@@ -1,6 +1,6 @@
 ---
 title: "Counties"
-author: "Satya Golla"
+author: "Steve Simon and Satya Golla"
 date: "12/29/2021"
 output: html_document
 ---
