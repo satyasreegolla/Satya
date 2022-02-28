@@ -147,3 +147,11 @@ Neighborhoods                          %>%
   st_transform(crs=st_crs(mo_ks_puma)) -> nbd
 ```
 
+```{r intersect-puma-Community-Districts}
+mo_ks_puma                             %>%
+st_intersects( cd[1,], sparse=FALSE) -> intersect_matrix
+ print(intersect_matrix)
+ ggplot(data=cd[1,], aes()) +
+        geom_sf(fill="lightgreen", col="darkgreen") +
+        geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") 
+```

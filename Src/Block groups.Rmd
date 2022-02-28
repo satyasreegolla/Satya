@@ -1,6 +1,6 @@
 ---
 title: "Block groups"
-author: "Satya Golla"
+author: "Steve Simon and Satya Golla"
 date: "2/7/2022"
 output: html_document
 ---
