@@ -134,21 +134,41 @@ johnson_county_blocks                   %>%
   bind_rows(jackson_county_blocks)      %>%
   bind_rows(cass_county_blocks)         %>%
   bind_rows(clay_county_blocks)         %>%
-  bind_rows(miami_county_blocks)        %>%
+  bind_rows(miami_county_blocks)       -> combine_blocks
+combine_blocks                          %>%
    ggplot()                              +
       geom_sf(aes())                     +
       ggtitle("all_county_blocks")  
   
 ```
 
+### Community districts
+
+This shapefile, Community_District, was provided by Neal Wilson. The various functions described in the US counties shapefiles section will be used here.
+
+```{r read-Community-Districts}
+file_name <- "Community_District.shp"
+path_name                              %>%
+  paste(file_name, sep="/")            %>%
+  st_read(stringsAsFactors=FALSE)      -> Community_Districts
+head(Community_Districts)
+Community_Districts                    %>%
+  ggplot()                              +
+      geom_sf(aes())                    +
+      ggtitle("Community_Districts")
+Community_Districts %>%
+  st_transform(crs=st_crs(combine_blocks)) -> cd
+```
+
+
 ```{r intersect-combine-blocks-Community-Districts}
 for (i in 1:2) { 
 combine_blocks                          %>%
-  st_intersects( cd[i,], sparse=FALSE) -> intersect_matrix
+  st_intersects( cd[i,], sparse=FALSE)  -> intersect_matrix
   total_area  <- st_area(combine_blocks[intersect_matrix,]) / 1000000
   intersect_area <- st_area(st_intersection(combine_blocks[intersect_matrix,],cd[i,])) / 1000000 
   print(intersect_area/total_area)
- combine_blocks[intersect_matrix,]    %>%
+ combine_blocks[intersect_matrix,]      %>%
  ggplot(aes())                            +
         geom_sf(fill=NA, col="darkgreen") +
         geom_sf(data=cd[i, ], fill=NA, col="darkred") +
