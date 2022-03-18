@@ -149,16 +149,12 @@ Neighborhoods                          %>%
 
 ```{r intersect-puma-Neighborhoods}
 for(i in 1:2) {
-mo_ks_puma                             %>%
-st_intersects( nbd[i,], sparse=FALSE) -> intersect_matrix
-  total_area  <- st_area(mo_ks_puma[intersect_matrix,]) / 1000000
-  intersect_area <- st_area(st_intersection(mo_ks_puma[intersect_matrix,],nbd[i,])) / 1000000 
-  print(intersect_area/total_area)
- map_position <- st_centroid(mo_ks_puma[intersect_matrix, ])
- ggplot(data=mo_ks_puma[intersect_matrix, ], aes()) +
-        geom_sf(fill=NA, col="darkgreen") +
-        geom_sf(data=nbd[i,], fill=NA, col="darkred")+
-   ggtitle(paste(c(nbd$NAME[i],mo_ks_puma$GEOID10[intersect_matrix]),collapse = ", ")) -> map
-   print(map)
-}
+mo_ks_puma               %>%
+ st_transform(crs=st_crs(mo_ks_puma)) -> nbd
+ st_intersects( nbd, sparse=FALSE) -> intersect_matrix
+ print(intersect_matrix)
+ ggplot(data=nbd, aes()) +
+        geom_sf(fill="lightgreen", col="darkgreen") +
+        geom_sf(data=nbd[intersect_matrix, ], fill="pink", col="darkred") 
+} 
 ```
