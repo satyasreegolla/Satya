@@ -46,7 +46,7 @@ variable in the file
 
 
 ```{r read-puma-mo}
-path_name <- "./data"
+path_name <- "../data"
 file_name <- "tl_2021_29_puma10.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
@@ -147,4 +147,18 @@ Neighborhoods                          %>%
 ```
 
 
-
+```{r intersect-puma-Neighborhoods}
+for(i in 1:2) {
+mo_ks_puma                             %>%
+st_intersects( nbd[i,], sparse=FALSE) -> intersect_matrix
+  total_area  <- st_area(mo_ks_puma[intersect_matrix,]) / 1000000
+  intersect_area <- st_area(st_intersection(mo_ks_puma[intersect_matrix,],nbd[i,])) / 1000000 
+  print(intersect_area/total_area)
+ map_position <- st_centroid(mo_ks_puma[intersect_matrix, ])
+ ggplot(data=mo_ks_puma[intersect_matrix, ], aes()) +
+        geom_sf(fill=NA, col="darkgreen") +
+        geom_sf(data=nbd[i,], fill=NA, col="darkred")+
+   ggtitle(paste(c(nbd$NAME[i],mo_ks_puma$GEOID10[intersect_matrix]),collapse = ", ")) -> map
+   print(map)
+}
+```
