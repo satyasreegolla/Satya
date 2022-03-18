@@ -5,7 +5,6 @@ date: "12/30/2021"
 output: html_document
 ---
 
-
 ```{r setup}
 library(sf)
 library(tidyverse)
@@ -18,7 +17,7 @@ A PUMA is a region within a state that contains no less than 100,000 people. The
 
 
 ```{r read-puma-ks}
-path_name <- "./data"
+path_name <- "../Data"
 file_name <- "tl_2021_20_puma10.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
@@ -147,11 +146,5 @@ Neighborhoods                          %>%
   st_transform(crs=st_crs(mo_ks_puma)) -> nbd
 ```
 
-```{r intersect-puma-Community-Districts}
-mo_ks_puma                             %>%
-st_intersects( cd[1,], sparse=FALSE) -> intersect_matrix
- print(intersect_matrix)
- ggplot(data=cd[1,], aes()) +
-        geom_sf(fill="lightgreen", col="darkgreen") +
-        geom_sf(data=cd[intersect_matrix, ], fill="pink", col="darkred") 
-```
+
+
