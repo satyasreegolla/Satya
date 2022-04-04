@@ -21,7 +21,7 @@ library(tidyverse)
 ```
 
 ```{r read-county}
-path_name <- "./data"
+path_name <- "../data"
 file_name <- "tl_2021_us_county.shp"
 path_name                              %>%
   paste(file_name, sep="/")            %>%
